@@ -1,9 +1,9 @@
 """This module contains the class definition for Comments."""
 
 from sqlalchemy import Column, Integer, Text, ForeignKey
-from server.models.Base import Base
+from server.models.Base import BaseModel
 
-class Comment(Base):
+class CommentModel(BaseModel):
     """This class represent the db model for a Comment."""
     __tablename__ = 'comments'
     id = Column(Integer, primary_key=True)

@@ -3,7 +3,8 @@
 from flask import Flask
 from flask_cors import CORS
 from server.api.Api import init_api
-from server.models.Base import engine, db_session, Base
+from server.graphql.schema import init_graphql
+from server.models.Base import engine, db_session, BaseModel
 
 APP = Flask(__name__)
 
@@ -14,7 +15,7 @@ CORS_CONFIG = CORS(APP, resources={r"/api/*": {"origins": ["http://localhost:300
 @APP.before_first_request
 def create_databse():
     """Create databa if not already created"""
-    Base.metadata.create_all(bind=engine)
+    BaseModel.metadata.create_all(bind=engine)
 
 # Close db session
 @APP.teardown_appcontext
@@ -24,6 +25,9 @@ def shutdown_session(exception=None):
 
 # Init API
 init_api(APP)
+
+# Init GraphQL
+init_graphql(APP)
 
 @APP.route("/")
 def hello():
