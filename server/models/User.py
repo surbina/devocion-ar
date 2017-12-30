@@ -14,5 +14,5 @@ class UserModel(BaseModel):
     first_name = Column(String(50))
     last_name = Column(String(50))
 
-    devotionals = relationship(DevotionalModel, backref='devotionals')
-    comments = relationship(CommentModel, backref='user_comments')
+    devotionals = relationship(DevotionalModel, backref='author')
+    comments = relationship(CommentModel, backref='user')

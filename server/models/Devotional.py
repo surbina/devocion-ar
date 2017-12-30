@@ -17,4 +17,4 @@ class DevotionalModel(BaseModel):
     publish_status = Column(Enum('DRAFT', 'PUBLISHED'))
     author_id = Column(Integer, ForeignKey('users.id'))
 
-    comments = relationship(CommentModel, backref='comments_list')
+    comments = relationship(CommentModel, backref='devotional')
