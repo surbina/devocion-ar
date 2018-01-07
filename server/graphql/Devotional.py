@@ -1,6 +1,6 @@
 """This module contains the Devotional graphql type definition."""
 
-from graphene import ObjectType, String, ID, Enum, Field
+from graphene import ObjectType, String, ID, Enum, Field, List
 from graphene.types.datetime import DateTime, Date
 from server.models.Devotional import DevotionalModel
 
@@ -19,6 +19,7 @@ class Devotional(ObjectType):
     creation_date = DateTime()
     publish_date = Date()
     author = Field(lambda: User)
+    comments = List(lambda: Comment)
 
     def __init__(self, model, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -50,4 +51,17 @@ class Devotional(ObjectType):
         """Author resolver"""
         return User.create_user_from_model(self.model.author)
 
+    def resolve_comments(self, info):
+        """Comments resolver"""
+        print(len(self.model.comments))
+        print(self.model.comments[0])
+
+        result = [Comment.create_comment_from_model(c) for c in self.model.comments]
+
+        print(result)
+
+        return result
+
+
 from server.graphql.User import User
+from server.graphql.Comment import Comment

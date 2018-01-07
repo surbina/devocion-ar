@@ -10,6 +10,7 @@ class User(ObjectType):
     first_name = String()
     last_name = String()
     devotionals = List(lambda: Devotional)
+    comments = List(lambda: Comment)
 
     def __init__(self, model, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -39,4 +40,10 @@ class User(ObjectType):
         """Devotionals resolver"""
         return [Devotional.create_devotional_from_model(d) for d in self.model.devotionals]
 
+    def resolve_comments(self, info):
+        """Comments resolver"""
+        return [Comment.create_comment_from_model(c) for c in self.model.comments]
+
+
 from server.graphql.Devotional import Devotional
+from server.graphql.Comment import Comment
